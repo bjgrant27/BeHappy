@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class QuoteData {
     ArrayList<Quote> quoteArrayList = new ArrayList<>();
 
-    public void getQuotes() {
+    public void getQuotes(final QuoteListAsyncResponse callBack) {
         String url = "https://raw.githubusercontent.com/pdichone/UIUX-Android-Course/master/Quotes.json%20";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url,
@@ -38,6 +38,10 @@ public class QuoteData {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+
+                if (callBack != null) {
+                    callBack.processFinished(quoteArrayList);
                 }
             }
         }, new Response.ErrorListener() {
